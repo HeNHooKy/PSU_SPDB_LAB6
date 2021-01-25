@@ -4,10 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Simple_CRUD.View"
+        Language="ru-RU"
         mc:Ignorable="d"
-        Title="MainMenu" Height="450" Width="800">
-    <Grid>
-        <Button Command="{Binding OpenFTCommand}" x:Name="firstTable" Content="Мебель" Margin="80,34,80,353"/>
-
-    </Grid>
+        Title="Главное меню" Height="450" Width="800">
+    <UniformGrid Rows="2">
+        <Button Command="{Binding OpenCountryCommand}" Content="Страна"/>
+        <Button Command="{Binding OpenManCommand}" Content="Руководители компаний или студий"/>
+    </UniformGrid>
 </Window>

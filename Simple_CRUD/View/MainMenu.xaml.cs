@@ -1,55 +1,44 @@
-﻿using Microsoft.VisualBasic;
-using Npgsql;
-using Simple_CRUD.Model;
+﻿using Simple_CRUD.Model;
 using Simple_CRUD.Tools;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Simple_CRUD.View
 {
     /// <summary>
     /// Логика взаимодействия для MainMenu.xaml
     /// </summary>
-    /// 
-
     public partial class MainMenu : Window
     {
-        public RelayCommand OpenFTCommand;
-        public string FTName = "мебель";
+        private readonly Query query;
+        public RelayCommand OpenCountryCommand { get; private set; }
+        public RelayCommand OpenManCommand { get; private set; }
 
         public MainMenu()
         {
             InitializeComponent();
-            var tView = new TableView(FTName);
-            tView.Show();
-            OpenFTCommand = new RelayCommand(OpenFT);
-            
+            query = new Query();
+            DataContext = this;
+            OpenCountryCommand = new RelayCommand(OpenCountry);
+            OpenManCommand = new RelayCommand(OpenMan);
+            this.Closed += MainWindow_Closed;
         }
-        
-        private void OpenFT()
+
+        private void OpenMan()
         {
-            
-            
+            var man = new ManView(query);
+            man.ShowDialog();
         }
 
-        
+        private void OpenCountry()
+        {
+            var country = new CountryView(query);
+            country.ShowDialog();
+        }
 
-
-
-
+        private void MainWindow_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
-
-    
-
-
 }

@@ -19,7 +19,8 @@
         <DataGrid Grid.Row="0" Grid.ColumnSpan="3" Name="CountriesDataGrid"  
                   ItemsSource="{Binding Countries}" 
                   AutoGenerateColumns="False" CanUserAddRows="False" 
-                  CellEditEnding="CountriesDataGrid_CellEditEnding">
+                  CellEditEnding="CountriesDataGrid_CellEditEnding"
+                  SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Land" Binding="{Binding Land}"/>

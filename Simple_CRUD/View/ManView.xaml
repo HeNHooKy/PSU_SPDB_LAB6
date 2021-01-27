@@ -19,7 +19,8 @@
         <DataGrid Grid.Row="0" Grid.ColumnSpan="3" Name="PeopleDataGrid"  
                   ItemsSource="{Binding People}" 
                   AutoGenerateColumns="False" CanUserAddRows="False" 
-                  CellEditEnding="PeopleDataGrid_CellEditEnding">
+                  CellEditEnding="PeopleDataGrid_CellEditEnding"
+                  SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
                 <DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>

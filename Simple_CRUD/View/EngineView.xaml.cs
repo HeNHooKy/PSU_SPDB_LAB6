@@ -27,8 +27,8 @@ namespace Simple_CRUD.View
     /// </summary>
     public partial class EngineView : Window
     {
-        public ObservableCollection<Engine> Engines { get; private set; }
-        public ObservableCollection<Studio> Studios { get; private set; }
+        //public ObservableCollection<Engine> Engines { get; private set; }
+        //public ObservableCollection<Studio> Studios { get; private set; }
         public RelayCommand InsertCommand { get; private set; }
         public RelayCommand CancelCommand { get; private set; }
         public RelayCommand RejectCommand { get; private set; }

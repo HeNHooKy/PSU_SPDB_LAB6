@@ -8,6 +8,14 @@ namespace Simple_CRUD.Model
 {
     public class Context : DbContext
     {
+        public User User { get; set; }
+        public Context(User User) : base()
+        {
+            this.User = User;
+        }
+        
+        public DbSet<User> Users { get; set; }
+
         public DbSet<Engine> Engines { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<Studio> Studios { get; set; }

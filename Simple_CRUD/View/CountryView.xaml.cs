@@ -27,7 +27,7 @@ namespace Simple_CRUD.View
     /// </summary>
     public partial class CountryView : Window
     {
-        public ObservableCollection<Country> Countries { get; private set; }
+        public ObservableCollection<Engine> Countries { get; private set; }
         public RelayCommand SaveCommand { get; private set; }
         public RelayCommand InsertCommand { get; private set; }
         public RelayCommand CancelCommand { get; private set; }
@@ -35,14 +35,14 @@ namespace Simple_CRUD.View
         public RelayCommand UpdateCommand { get; private set; }
 
         private readonly List<Row> DeleteQueue = new List<Row>();
-        private readonly List<Country> InsertQueue = new List<Country>();
-        private readonly List<Country> UpdateQueue = new List<Country>();
+        private readonly List<Engine> InsertQueue = new List<Engine>();
+        private readonly List<Engine> UpdateQueue = new List<Engine>();
 
         private readonly ICountryProvider provider;
         
         public CountryView(Query query)
         {
-            Countries = new ObservableCollection<Country>();
+            Countries = new ObservableCollection<Engine>();
             SaveCommand = new RelayCommand(SaveHandler);
             InsertCommand = new RelayCommand(InsertHandler);
             CancelCommand = new RelayCommand(CancelHandler);
@@ -87,7 +87,7 @@ namespace Simple_CRUD.View
         private void InsertHandler()
         {
             Save.IsEnabled = true;
-            Country country = new Country
+            Engine country = new Engine
             {
                 Id = Countries.Select(c => c.Id).Max() + 1
             };
@@ -98,7 +98,7 @@ namespace Simple_CRUD.View
         private void CountriesDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
             DataGrid dg = sender as DataGrid;
-            Country country = (Country)dg.SelectedItems[0];
+            Engine country = (Engine)dg.SelectedItems[0];
             if(UpdateQueue.Contains(country))
             {
                 UpdateQueue.Remove(country);
@@ -123,7 +123,7 @@ namespace Simple_CRUD.View
         {
             foreach (Row row in DeleteQueue)
             {
-                if(!provider.Delete((Country)row))
+                if(!provider.Delete((Engine)row))
                 {
                     OccurredProblem();
                     return;

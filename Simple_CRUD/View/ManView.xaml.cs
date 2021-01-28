@@ -88,7 +88,7 @@ namespace Simple_CRUD.View
             Man man = new Man
             {
                 Id = People.Select(m => m.Id).Max() + 1,
-                CountryBorn = new Country()
+                CountryBorn = new Engine()
             };
             People.Add(man);
             InsertQueue.Add(man);

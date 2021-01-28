@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Simple_CRUD.View;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -15,8 +17,16 @@ namespace Simple_CRUD
     {
         private void Application_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            MessageBox.Show("An unhandled exception just occurred: " + e.Exception.Message + "\nStackTrace:" + e.Exception.StackTrace, "Exception Sample", MessageBoxButton.OK, MessageBoxImage.Warning);
-            e.Handled = true;
+            if (e.Exception.GetType().Equals(typeof(DbUpdateException)))
+            {
+                MessageBox.Show($"Критическая ошибка 'Невозможно удалить связанную запись': {e.Exception.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                e.Handled = true;
+            }
+            else
+            {
+                MessageBox.Show($"An unhandled exception just occurred: " + e.Exception.Message + "\nStackTrace:" + e.Exception.StackTrace, "Exception", MessageBoxButton.OK, MessageBoxImage.Warning);
+                e.Handled = true;
+            }
         }
     }
 }

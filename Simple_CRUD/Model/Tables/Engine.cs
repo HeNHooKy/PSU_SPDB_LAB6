@@ -13,7 +13,9 @@ namespace Simple_CRUD.Model.Tables
         public DateTime ProductionYear { get; set; }
         [Column("name")]
         public string Name { get; set; }
-        public Studio StudioName { get; set; }
+        [Column("studio_id")]
+        public int StudioId { get; set; }
+        public Studio Studio { get; set; }
     }
     public class Studio
     {

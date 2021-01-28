@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Title="Главное меню" Height="450" Width="800">
     <UniformGrid Rows="2">
-        <Button Command="{Binding OpenCountryCommand}" Content="Страна"/>
-        <Button Command="{Binding OpenManCommand}" Content="Руководители компаний или студий"/>
+        <Button Command="{Binding OpenEngineCommand}" Content="Игровые движки"/>
+        <Button Command="{Binding OpenGameCommand}" Content="Игры"/>
     </UniformGrid>
 </Window>

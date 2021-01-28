@@ -10,30 +10,28 @@ namespace Simple_CRUD.View
     /// </summary>
     public partial class MainMenu : Window
     {
-        private readonly Query query;
-        public RelayCommand OpenCountryCommand { get; private set; }
-        public RelayCommand OpenManCommand { get; private set; }
+        public RelayCommand OpenGameCommand { get; private set; }
+        public RelayCommand OpenEngineCommand { get; private set; }
 
         public MainMenu()
         {
             InitializeComponent();
-            query = new Query();
             DataContext = this;
-            OpenCountryCommand = new RelayCommand(OpenCountry);
-            OpenManCommand = new RelayCommand(OpenMan);
+            OpenEngineCommand = new RelayCommand(OpenEngine);
+            OpenGameCommand = new RelayCommand(OpenGame);
             this.Closed += MainWindow_Closed;
         }
 
-        private void OpenMan()
+        private void OpenEngine()
         {
-            var man = new ManView(query);
-            man.ShowDialog();
+            var engine = new EngineView();
+            engine.ShowDialog();
         }
 
-        private void OpenCountry()
+        private void OpenGame()
         {
-            var country = new CountryView(query);
-            country.ShowDialog();
+            var game = new GameView();
+            game.ShowDialog();
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)

@@ -13,7 +13,27 @@ namespace Simple_CRUD.Model
         public DbSet<Studio> Studios { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("Host=my_host;Database=my_db;Username=my_user;Password=my_pw");
+            => optionsBuilder.UseNpgsql("Host = localhost; Port = 5432; Database = postgres; Username = postgres; Password = pereterebi123");
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Engine>()
+                .ToTable("engines")
+                .HasKey(e => e.Id);
+
+            modelBuilder.Entity<Game>()
+                .ToTable("games")
+                .HasKey(g => g.Id);
+
+            modelBuilder.Entity<Studio>()
+                .ToTable("studios")
+                .HasKey(s => s.Id);
+
+            modelBuilder.Entity<Publisher>()
+                .ToTable("publishers")
+                .HasKey(p => p.Id);
+        }
+
+                
     }
 }

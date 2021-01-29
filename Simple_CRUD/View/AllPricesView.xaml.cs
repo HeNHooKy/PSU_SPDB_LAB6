@@ -50,7 +50,7 @@ namespace Simple_CRUD.View
             if(!user.Approved)
             {
                 Insert.IsEnabled = false;
-                AllPricesDataGrid.IsReadOnly = true;
+                //AllPricesDataGrid.IsReadOnly = true;
             }
         }
 

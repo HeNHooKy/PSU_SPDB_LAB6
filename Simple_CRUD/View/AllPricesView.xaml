@@ -22,6 +22,7 @@
                 RowEditEnding="AllPricessDataGrid_RowEditEnding"
                 SelectionMode="Single">
             <DataGrid.Columns>
+                
                 <DataGridComboBoxColumn 
                 Header="Game"
                 SelectedValueBinding="{Binding GameId}"

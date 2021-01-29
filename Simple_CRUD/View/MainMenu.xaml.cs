@@ -12,7 +12,9 @@ namespace Simple_CRUD.View
     {
         public string AuthMessage { get; set; }
         public RelayCommand OpenGameCommand { get; private set; }
-        public RelayCommand OpenEngineCommand { get; private set; }
+        public RelayCommand OpenPriceCommand { get; private set; }
+        public RelayCommand OpenManCommand { get; private set; }
+        public RelayCommand OpenPlaygrounCommand { get; private set; }
 
         private User User { get; set; }
 
@@ -22,21 +24,35 @@ namespace Simple_CRUD.View
             DataContext = this;
             User = new User() { Name = "Гость", Approved = false };
             AuthMessage = $"Добро пожаловать в панель управления, {User.Name}!";
-            OpenEngineCommand = new RelayCommand(OpenEngine);
+            OpenPriceCommand = new RelayCommand(OpenPrice);
             OpenGameCommand = new RelayCommand(OpenGame);
+            OpenManCommand = new RelayCommand(OpenMan);
+            OpenPlaygrounCommand = new RelayCommand(OpenPlayground);
             this.Closed += MainWindow_Closed;
         }
 
-        private void OpenEngine()
+        private void OpenPrice()
         {
-            var engine = new EngineView();
-            engine.ShowDialog();
+            var price = new AllPricesView(User);
+            price.ShowDialog();
         }
 
         private void OpenGame()
         {
-            var game = new GameView();
+            var game = new GameView(User);
             game.ShowDialog();
+        }
+
+        private void OpenMan()
+        {
+            var man = new ManView(User);
+            man.ShowDialog();
+        }
+
+        private void OpenPlayground()
+        {
+            var playground = new PlaygroundView(User);
+            playground.ShowDialog();
         }
 
         private void MainWindow_Closed(object sender, EventArgs e)

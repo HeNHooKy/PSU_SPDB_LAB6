@@ -23,13 +23,5 @@ namespace Simple_CRUD.Model.Tables
         public Publisher Publisher { get; set; }
         public Engine Engine { get; set; }
         public Studio Studio { get; set; }
-
-    }
-    public class Publisher
-    {
-        [Column("id")]
-        public int Id { get; set; }
-        [Column("name")]
-        public string Name { get; set; }
     }
 }

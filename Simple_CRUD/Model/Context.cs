@@ -16,30 +16,53 @@ namespace Simple_CRUD.Model
         
         public DbSet<User> Users { get; set; }
 
+        public DbSet<Man> People { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Price> AllPrices { get; set; }
+        public DbSet<Playground> Playgrounds { get; set; }
         public DbSet<Engine> Engines { get; set; }
         public DbSet<Game> Games { get; set; }
         public DbSet<Studio> Studios { get; set; }
         public DbSet<Publisher> Publishers { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("Host = localhost; Port = 5432; Database = postgres; Username = postgres; Password = pereterebi123");
+            => optionsBuilder.UseNpgsql(Config.connectionString);
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Engine>()
-                .ToTable("engines")
-                .HasKey(e => e.Id);
+            modelBuilder.Entity<Price>()
+                .ToTable("allprices");
+
+            modelBuilder.Entity<Country>()
+                .ToTable("countries")
+                .HasKey(c => c.Id);
+
+            modelBuilder.Entity<Man>()
+                .ToTable("people")
+                .HasKey(p => p.Id);
+
+            modelBuilder.Entity<Playground>()
+                .ToTable("playgrounds")
+                .HasKey(p => p.Id);
 
             modelBuilder.Entity<Game>()
                 .ToTable("games")
                 .HasKey(g => g.Id);
 
-            modelBuilder.Entity<Studio>()
-                .ToTable("studios")
-                .HasKey(s => s.Id);
+            modelBuilder.Entity<Engine>()
+                .ToTable("engines")
+                .HasKey(e => e.Id);
 
             modelBuilder.Entity<Publisher>()
                 .ToTable("publishers")
                 .HasKey(p => p.Id);
+
+            modelBuilder.Entity<Studio>()
+                .ToTable("studios")
+                .HasKey(s => s.Id);
+
+            modelBuilder.Entity<User>()
+                .ToTable("users")
+                .HasKey(u => u.Id);
         }
 
                 

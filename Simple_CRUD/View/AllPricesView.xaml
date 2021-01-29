@@ -1,0 +1,74 @@
+﻿<Window x:Class="Simple_CRUD.View.AllPricesView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Simple_CRUD.View"
+        mc:Ignorable="d"
+        Title="AllPricesView" Height="450" Width="800">
+    <Grid >
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="8*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Row="0" Grid.ColumnSpan="3" Name="AllPricesDataGrid"  
+                ItemsSource="{Binding AllPrices}" 
+                AutoGenerateColumns="False" CanUserAddRows="False" 
+                RowEditEnding="AllPricessDataGrid_RowEditEnding"
+                SelectionMode="Single">
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn 
+                Header="Game"
+                SelectedValueBinding="{Binding GameId}"
+                DisplayMemberPath="Name" 
+                SelectedValuePath="Id">
+
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Games, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Games, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+
+                <DataGridComboBoxColumn 
+                Header="Playground"
+                SelectedValueBinding="{Binding PlaygroundId}"
+                DisplayMemberPath="Name" 
+                SelectedValuePath="Id">
+
+                    <DataGridComboBoxColumn.ElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Playgrounds, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.ElementStyle>
+                    <DataGridComboBoxColumn.EditingElementStyle>
+                        <Style TargetType="{x:Type ComboBox}">
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Playgrounds, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                        </Style>
+                    </DataGridComboBoxColumn.EditingElementStyle>
+                </DataGridComboBoxColumn>
+
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="Delete_Click" Uid="{Binding Id}">-</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+            <DataGridTextColumn Header="Cost" Binding="{Binding Cost}"/>
+        </DataGrid>
+        <Button Grid.Row="1" Grid.Column="0" x:Name="Insert" Content="Insert" Command="{Binding InsertCommand}" IsEnabled="True"/>
+        <Button Grid.Row="1" Grid.Column="2" x:Name="Cancel" Content="Cancel" Command="{Binding CancelCommand}" IsEnabled="True"/>
+    </Grid>
+</Window>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Printing;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
@@ -33,10 +34,11 @@ namespace Simple_CRUD.View
         public RelayCommand RejectCommand { get; private set; }
 
         private readonly Context context;
+        private readonly User User;
 
-        public GameView()
+        public GameView(User user)
         {
-            this.context = new Context();
+            this.context = new Context(user);
             Games = new ObservableCollection<Game>();
             Publishers = new ObservableCollection<Publisher>();
             Engines = new ObservableCollection<Engine>();
@@ -47,6 +49,12 @@ namespace Simple_CRUD.View
             InitializeComponent();
             UpdateTable();
             DataContext = this;
+
+            if (!user.Approved)
+            {
+                Insert.IsEnabled = false;
+                GamesDataGrid.IsReadOnly = true;
+            }
         }
 
         private void UpdateTable()
@@ -102,12 +110,15 @@ namespace Simple_CRUD.View
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            Button but = (Button)sender;
-            int id = int.Parse(but.Uid);
-            var game = Games.First(c => c.Id == id);
-            Games.Remove(game);
-            context.Games.Remove(game);
-            context.SaveChanges();
+            if (User.Approved)
+            {
+                Button but = (Button)sender;
+                int id = int.Parse(but.Uid);
+                var game = Games.First(c => c.Id == id);
+                Games.Remove(game);
+                context.Games.Remove(game);
+                context.SaveChanges();
+            }
         }
 
         private void GamesDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)

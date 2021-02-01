@@ -59,6 +59,8 @@ namespace Simple_CRUD.View
         {
 
             AllPrices.Clear();
+            Playgrounds.Clear();
+            Games.Clear();
             foreach (var price in context.AllPrices)
             {
                 AllPrices.Add(price);

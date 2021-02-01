@@ -36,27 +36,33 @@ namespace Simple_CRUD.View
 
         public AllPricesView(User user)
         {
+            User = user;
+            context = new Context(user);
             Games = new ObservableCollection<Game>();
             Playgrounds = new ObservableCollection<Playground>();
             AllPrices = new ObservableCollection<Price>();
-
-            User = user;
-            context = new Context(user);
-            InitializeComponent();
             InsertCommand = new RelayCommand(InsertHandler);
             CancelCommand = new RelayCommand(CancelHandler);
-            UpdateTable();
 
-            if(!user.Approved)
+            InitializeComponent();
+            UpdateTable();
+            DataContext = this;
+
+            if (!user.Approved)
             {
                 Insert.IsEnabled = false;
-                //AllPricesDataGrid.IsReadOnly = true;
+                AllPricesDataGrid.IsReadOnly = true;
             }
         }
 
         private void UpdateTable()
         {
+
             AllPrices.Clear();
+            foreach (var price in context.AllPrices)
+            {
+                AllPrices.Add(price);
+            }
             foreach (var playground in context.Playgrounds)
             {
                 Playgrounds.Add(playground);
@@ -64,10 +70,6 @@ namespace Simple_CRUD.View
             foreach (var game in context.Games)
             {
                 Games.Add(game);
-            }
-            foreach(var price in context.AllPrices)
-            {
-                AllPrices.Add(price);
             }
             OnPropertyChanged(nameof(AllPrices));
         }

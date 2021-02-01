@@ -34,14 +34,17 @@ namespace Simple_CRUD.View
         private readonly User User;
         public ManView(User user)
         {
+            
             People = new ObservableCollection<Man>();
             Countries = new ObservableCollection<Country>();
             User = user;
             context = new Context(user);
-            InitializeComponent();
             InsertCommand = new RelayCommand(InsertHandler);
             CancelCommand = new RelayCommand(CancelHandler);
+
+            InitializeComponent();
             UpdateTable();
+            DataContext = this;
 
             if (!user.Approved)
             {

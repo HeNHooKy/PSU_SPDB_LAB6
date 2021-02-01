@@ -90,14 +90,14 @@ namespace Simple_CRUD.View
         private void InsertHandler()
         {
 
-            var ids = GetGamePlaygroundMinSet();
+            var (gameId, playgroundId) = GetGamePlaygroundMinSet();
             Price price = new Price
             {
                 Id = AllPrices.Select(p => p.Id).Max() + 1,
-                GameId = ids.gameId,
-                PlaygroundId = ids.playgroundId,
-                Game = Games.First(g => g.Id == ids.gameId),
-                Playground = Playgrounds.First(p => p.Id == ids.playgroundId),
+                GameId = gameId,
+                PlaygroundId = playgroundId,
+                Game = Games.First(g => g.Id == gameId),
+                Playground = Playgrounds.First(p => p.Id == playgroundId),
                 Cost = 0
             };
             

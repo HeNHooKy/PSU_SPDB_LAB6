@@ -9,7 +9,7 @@ namespace Simple_CRUD.Model.Tables
     {
         [Column("id")]
         public int Id { get; set; }
-        [Column("string")]
+        [Column("name")]
         public string Name { get; set; }
     }
 }

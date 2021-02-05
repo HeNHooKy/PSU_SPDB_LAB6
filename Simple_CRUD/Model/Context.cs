@@ -3,13 +3,14 @@ using Simple_CRUD.Model.Tables;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
 
 namespace Simple_CRUD.Model
 {
     public class Context : DbContext
     {
-        public User User { get; set; }
-        public Context(User User) : base()
+        public AuthUser User { get; set; }
+        public Context(AuthUser User) : base()
         {
             this.User = User;
         }
@@ -65,6 +66,23 @@ namespace Simple_CRUD.Model
                 .HasKey(u => u.Id);
         }
 
-                
+        public override int SaveChanges()
+        {
+            try
+            {
+                if (User.Approved)
+                {
+                    return base.SaveChanges();
+                }
+                return -1;
+            }
+            catch(Exception)
+            {
+                MessageBox.Show("Невозможно выполнить это действие!");
+                return -1;
+            }
+            
+        }
+
     }
 }

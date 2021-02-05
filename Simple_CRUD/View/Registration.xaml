@@ -1,0 +1,63 @@
+﻿<Window x:Class="Simple_CRUD.View.Registration"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Simple_CRUD.View"
+        mc:Ignorable="d"
+        Title="Registration" Height="350" Width="450">
+    <Grid Background="#13151A">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="1" Text="Регистрация" TextAlignment="Center" Foreground="White" FontSize="25px" 
+                   VerticalAlignment="Bottom"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="Логин" TextAlignment="Left" Foreground="White"  
+                   VerticalAlignment="Bottom" Padding="0 0 0 5"/>
+        <TextBox  Grid.Row="2" Grid.Column="1" Text="{Binding LoginField}" Background="LightBlue" Foreground="DarkBlue" />
+
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="Имя" TextAlignment="Left" Foreground="White"  
+                   VerticalAlignment="Bottom" Padding="0 0 0 5"/>
+        <TextBox  Grid.Row="4" Grid.Column="1" Text="{Binding NameField}" Background="LightBlue" Foreground="DarkBlue" />
+
+        <TextBlock Grid.Row="5" Grid.Column="1" Text="Пароль" TextAlignment="Left" Foreground="White" 
+                   VerticalAlignment="Bottom" Padding="0 0 0 5"/>
+
+        <PasswordBox Grid.Row="6" Grid.Column="1" Name="passwordFirstOne"
+         Background="LightBlue" Foreground="DarkBlue" 
+         MaxLength="25" PasswordChar="*" />
+
+        <TextBlock Grid.Row="7" Grid.Column="1" Text="Повторите пароль" TextAlignment="Left" Foreground="White" 
+                   VerticalAlignment="Bottom" Padding="0 0 0 5"/>
+
+        <PasswordBox Grid.Row="8" Grid.Column="1" Name="passwordSecondOne"
+         Background="LightBlue" Foreground="DarkBlue" 
+         MaxLength="25" PasswordChar="*" />
+
+        <TextBlock Grid.Row="9" Grid.Column="1" VerticalAlignment="Center"
+            Foreground="PaleVioletRed" Name="ErrorMessageField" Margin="5"/>
+
+        <Button Grid.Row="10" Grid.Column="1"
+            Content="Зарегистрировать" Command="{Binding RegisterCommand}" Background="LightGray" BorderBrush="#6C5B7B"/>
+
+    </Grid>
+</Window>

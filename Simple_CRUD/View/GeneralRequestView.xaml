@@ -1,0 +1,42 @@
+﻿<Window x:Class="Simple_CRUD.View.GeneralRequestView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Simple_CRUD.View"
+        mc:Ignorable="d"
+        Title="GeneralRequestView" Height="300" Width="400">
+    <Grid Background="#13151A">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Поисковой запрос" TextAlignment="Center"
+                   Foreground="White" FontSize="25px" VerticalAlignment="Bottom"/>
+
+        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding FirstRequestName}" TextAlignment="Left" Foreground="White"  
+                   VerticalAlignment="Bottom" Padding="0 0 0 5"/>
+
+        <TextBox  Grid.Row="2" Grid.Column="1" Text="{Binding FirstRequestInput}" Background="LightBlue" Foreground="DarkBlue" />
+
+        <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding SecondRequestName}" TextAlignment="Left" Foreground="White" 
+                   VerticalAlignment="Bottom" Padding="0 0 0 5"/>
+
+        <TextBox  Grid.Row="4" Grid.Column="1" Text="{Binding SecondRequestInput}" Background="LightBlue" Foreground="DarkBlue" />
+
+        <Button Grid.Row="6" Grid.Column="1"
+            Content="Выполнить запрос" Command="{Binding MakeRequestCommand}" Background="LightGray" BorderBrush="#6C5B7B"/>
+    </Grid>
+</Window>

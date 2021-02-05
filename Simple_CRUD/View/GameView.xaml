@@ -9,6 +9,7 @@
     <Grid >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="0.3*" />
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
@@ -16,14 +17,14 @@
             <RowDefinition Height="8*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" Grid.ColumnSpan="3" Name="GamesDataGrid"  
+        <DataGrid Grid.Row="0" Grid.ColumnSpan="4" Name="GamesDataGrid"  
                   ItemsSource="{Binding Games}" 
                   AutoGenerateColumns="False" CanUserAddRows="False" 
                   RowEditEnding="GamesDataGrid_RowEditEnding"
                   SelectionMode="Single">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-                <DataGridTextColumn Header="Budget" Binding="{Binding Budget}"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Бюджет" Binding="{Binding Budget}"/>
                 <DataGridComboBoxColumn 
                     Header="Studio"
                     SelectedValueBinding="{Binding StudioId}" 
@@ -42,7 +43,7 @@
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
                 <DataGridComboBoxColumn 
-                    Header="Publisher"
+                    Header="Издатель"
                     SelectedValueBinding="{Binding PublisherId}" 
                     DisplayMemberPath="Name" 
                     SelectedValuePath="Id">
@@ -59,7 +60,7 @@
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
                 <DataGridComboBoxColumn 
-                    Header="Engine"
+                    Header="Движок"
                     SelectedValueBinding="{Binding EngineId}" 
                     DisplayMemberPath="Name" 
                     SelectedValuePath="Id">
@@ -84,7 +85,8 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Grid.Row="1" Grid.Column="0" x:Name="Insert" Content="Insert" Command="{Binding InsertCommand}" IsEnabled="True"/>
-        <Button Grid.Row="1" Grid.Column="2" x:Name="Cancel" Content="Cancel" Command="{Binding CancelCommand}" IsEnabled="True"/>
+        <Button Grid.Row="1" Grid.Column="0" x:Name="Insert" Content="Добавить запись" Command="{Binding InsertCommand}" IsEnabled="True"/>
+        <Button Grid.Row="1" Grid.Column="1" x:Name="Request" Content="Запрос" Command="{Binding RequestCommand}" IsEnabled="True"/>
+        <Button Grid.Row="1" Grid.Column="3" x:Name="Cancel" Content="Закрыть" Command="{Binding CancelCommand}" IsEnabled="True"/>
     </Grid>
 </Window>

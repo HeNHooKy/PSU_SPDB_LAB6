@@ -1,6 +1,7 @@
 ﻿using Simple_CRUD.Model;
 using Simple_CRUD.Model.Tables;
 using Simple_CRUD.Tools;
+using Simple_CRUD.View.Support;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -22,19 +23,20 @@ namespace Simple_CRUD.View
     /// <summary>
     /// Логика взаимодействия для AllPricesView.xaml
     /// </summary>
-    public partial class AllPricesView : Window
+    public partial class AllPricesView : Window, IExtendedWindow
     {
         public ObservableCollection<Game> Games { get; private set; }
         public ObservableCollection<Playground> Playgrounds { get; private set; }
         public ObservableCollection<Price> AllPrices { get; private set; }
 
         public RelayCommand InsertCommand { get; private set; }
+        public RelayCommand RequestCommand { get; private set; }
         public RelayCommand CancelCommand { get; private set; }
 
         private readonly Context context;
-        private readonly User User;
+        private readonly AuthUser User;
 
-        public AllPricesView(User user)
+        public AllPricesView(AuthUser user)
         {
             User = user;
             context = new Context(user);
@@ -42,6 +44,7 @@ namespace Simple_CRUD.View
             Playgrounds = new ObservableCollection<Playground>();
             AllPrices = new ObservableCollection<Price>();
             InsertCommand = new RelayCommand(InsertHandler);
+            RequestCommand = new RelayCommand(RequestHandler);
             CancelCommand = new RelayCommand(CancelHandler);
 
             InitializeComponent();
@@ -55,13 +58,35 @@ namespace Simple_CRUD.View
             }
         }
 
+        private void RequestHandler()
+        {
+            var request = new GeneralRequestView(this, "Игра", "Игровая площадка");
+            request.ShowDialog();
+        }
+
         private void UpdateTable()
         {
+            UpdateTable(null, null);
+        }
+
+        public void UpdateTable(string firstField, string secondField)
+        {
+            //Стандартный запрос
+            firstField = firstField == null ? null : firstField.ToLower().Trim();
+            secondField = secondField == null ? null : secondField.ToLower().Trim();
+
+            var contextAllPrices = context.AllPrices.Where(ap =>
+                (firstField == null || (firstField != null && ap.Game.Name.ToLower().Contains(firstField))) &&
+                (secondField == null || (secondField != null && ap.Playground.Name.ToLower().Contains(secondField)))
+            );
+            //--Стандартный запрос
 
             AllPrices.Clear();
             Playgrounds.Clear();
             Games.Clear();
-            foreach (var price in context.AllPrices)
+            
+
+            foreach (var price in contextAllPrices)
             {
                 AllPrices.Add(price);
             }
@@ -89,21 +114,27 @@ namespace Simple_CRUD.View
 
         private void InsertHandler()
         {
-
-            var (gameId, playgroundId) = GetGamePlaygroundMinSet();
-            Price price = new Price
+            if(User.Approved)
             {
-                Id = AllPrices.Select(p => p.Id).Max() + 1,
-                GameId = gameId,
-                PlaygroundId = playgroundId,
-                Game = Games.First(g => g.Id == gameId),
-                Playground = Playgrounds.First(p => p.Id == playgroundId),
-                Cost = 0
-            };
-            
-            AllPrices.Add(price);
-            context.AllPrices.Add(price);
-            context.SaveChanges();
+                var (gameId, playgroundId) = GetGamePlaygroundMinSet();
+
+                Price price = new Price
+                {
+                    Id = context.AllPrices.Count() == 0 ? 1 : context.AllPrices.Select(p => p.Id).Max() + 1,
+                    GameId = gameId,
+                    PlaygroundId = playgroundId,
+                    Game = Games.First(g => g.Id == gameId),
+                    Playground = Playgrounds.First(p => p.Id == playgroundId),
+                    Cost = 0
+                };
+
+                
+                context.AllPrices.Add(price);
+                if(context.SaveChanges() != -1)
+                {
+                    AllPrices.Add(price);
+                }
+            }
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
@@ -113,21 +144,27 @@ namespace Simple_CRUD.View
                 Button but = (Button)sender;
                 int id = int.Parse(but.Uid);
                 var price = AllPrices.First(c => c.Id == id);
-                AllPrices.Remove(price);
+                
                 context.AllPrices.Remove(price);
-                context.SaveChanges();
+                if(context.SaveChanges() != -1)
+                {
+                    AllPrices.Remove(price);
+                }
             }
         }
 
         private void AllPricessDataGrid_RowEditEnding(object sender, DataGridRowEditEndingEventArgs e)
         {
-            DataGrid dg = sender as DataGrid;
-
-            Price price = context.AllPrices.FirstOrDefault(e => e.Id == ((Engine)dg.SelectedItems[0]).Id);
-            if (price != null)
+            if(User.Approved)
             {
-                context.AllPrices.Update(price);
-                context.SaveChanges();
+                DataGrid dg = sender as DataGrid;
+
+                Price price = context.AllPrices.FirstOrDefault(e => e.Id == ((Price)dg.SelectedItems[0]).Id);
+                if (price != null)
+                {
+                    context.AllPrices.Update(price);
+                    context.SaveChanges();
+                }
             }
         }
 

@@ -9,6 +9,7 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="0.3*" />
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
@@ -16,18 +17,20 @@
             <RowDefinition Height="8*" />
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" Grid.ColumnSpan="3" Name="PeopleDataGrid"  
+        <DataGrid Grid.Row="0" Grid.ColumnSpan="4" Name="PeopleDataGrid"  
                 ItemsSource="{Binding People}" 
                 AutoGenerateColumns="False" CanUserAddRows="False" 
                 RowEditEnding="PeopleDataGrid_RowEditEnding"
                 SelectionMode="Single">
 
-            <DataGridTextColumn Header="Name" Binding="{Binding Name}"/>
-            <DataGridTextColumn Header="Surname" Binding="{Binding Surname}"/>
+            
             <DataGrid.Columns>
+                <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+                <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
+                
                 <DataGridComboBoxColumn 
-                Header="Studio"
-                SelectedValueBinding="{Binding CountryId}"
+                Header="Страна"
+                SelectedValueBinding="{Binding CountryBornId}"
                 DisplayMemberPath="Name" 
                 SelectedValuePath="Id">
 
@@ -53,7 +56,8 @@
             </DataGrid.Columns>
 
         </DataGrid>
-        <Button Grid.Row="1" Grid.Column="0" x:Name="Insert" Content="Insert" Command="{Binding InsertCommand}" IsEnabled="True"/>
-        <Button Grid.Row="1" Grid.Column="2" x:Name="Cancel" Content="Cancel" Command="{Binding CancelCommand}" IsEnabled="True"/>
+        <Button Grid.Row="1" Grid.Column="0" x:Name="Insert" Content="Создать запись" Command="{Binding InsertCommand}" IsEnabled="True"/>
+        <Button Grid.Row="1" Grid.Column="1" x:Name="Request" Content="Запрос" Command="{Binding RequestCommand}" IsEnabled="True"/>
+        <Button Grid.Row="1" Grid.Column="3" x:Name="Cancel" Content="Закрыть" Command="{Binding CancelCommand}" IsEnabled="True"/>
     </Grid>
 </Window>

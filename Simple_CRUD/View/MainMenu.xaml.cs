@@ -10,25 +10,38 @@ namespace Simple_CRUD.View
     /// </summary>
     public partial class MainMenu : Window
     {
-        public string AuthMessage { get; set; }
         public RelayCommand OpenGameCommand { get; private set; }
         public RelayCommand OpenPriceCommand { get; private set; }
         public RelayCommand OpenManCommand { get; private set; }
         public RelayCommand OpenPlaygrounCommand { get; private set; }
+        public RelayCommand LoginCommand { get; private set; }
+        public RelayCommand RegistrationCommand { get; private set; }
 
-        private User User { get; set; }
+        private AuthUser User { get; set; }
 
         public MainMenu()
         {
             InitializeComponent();
             DataContext = this;
-            User = new User() { Name = "Гость", Approved = false };
-            AuthMessage = $"Добро пожаловать в панель управления, {User.Name}!";
+            User = new AuthUser() { Name = "Гость", Approved = false };
+            AuthNewUser();
             OpenPriceCommand = new RelayCommand(OpenPrice);
             OpenGameCommand = new RelayCommand(OpenGame);
             OpenManCommand = new RelayCommand(OpenMan);
             OpenPlaygrounCommand = new RelayCommand(OpenPlayground);
+            LoginCommand = new RelayCommand(OpenLogin);
+            RegistrationCommand = new RelayCommand(OpenRegisetration);
             this.Closed += MainWindow_Closed;
+        }
+
+        public void AuthNewUser()
+        {
+            AuthMessage.Text = $"Добро пожаловать в панель управления, {User.Name}!";
+        }
+
+        public void CloseOpened(Window window)
+        {
+            window.Close();
         }
 
         private void OpenPrice()
@@ -37,6 +50,17 @@ namespace Simple_CRUD.View
             price.ShowDialog();
         }
 
+        private void OpenLogin()
+        {
+            var login = new Login(this, User);
+            login.ShowDialog();
+        }
+
+        private void OpenRegisetration()
+        {
+            var registration = new Registration(User);
+            registration.ShowDialog();
+        }
         private void OpenGame()
         {
             var game = new GameView(User);
@@ -59,5 +83,7 @@ namespace Simple_CRUD.View
         {
             Application.Current.Shutdown();
         }
+
+        
     }
 }

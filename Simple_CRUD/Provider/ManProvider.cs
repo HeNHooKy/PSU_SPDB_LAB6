@@ -94,7 +94,6 @@ namespace Simple_CRUD.Provider
                     con.Open();
                     var queryString = query.insert_man;
                     var command = new NpgsqlCommand(queryString, con);
-                    MessageBox.Show($"{man.Name} {man.Surname}");
                     command.Parameters.AddWithValue("@name", man.Name);
                     command.Parameters.AddWithValue("@surname", man.Surname);
                     command.Parameters.AddWithValue("@country_born_id", country.Id);

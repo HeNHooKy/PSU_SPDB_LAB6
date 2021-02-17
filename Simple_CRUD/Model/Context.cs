@@ -66,9 +66,5 @@ namespace Simple_CRUD.Model
                 .HasKey(u => u.Id);
         }
 
-        public override int SaveChanges()
-        {
-            return base.SaveChanges();
-        }
     }
 }

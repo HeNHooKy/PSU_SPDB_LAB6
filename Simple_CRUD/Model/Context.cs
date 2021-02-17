@@ -68,21 +68,7 @@ namespace Simple_CRUD.Model
 
         public override int SaveChanges()
         {
-            try
-            {
-                if (User.Approved)
-                {
-                    return base.SaveChanges();
-                }
-                return -1;
-            }
-            catch(Exception)
-            {
-                MessageBox.Show("Невозможно выполнить это действие!");
-                return -1;
-            }
-            
+            return base.SaveChanges();
         }
-
     }
 }

@@ -38,6 +38,7 @@
                     <DataGridComboBoxColumn.EditingElementStyle>
                         <Style TargetType="{x:Type ComboBox}">
                             <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Countries, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                            <EventSetter Event="SelectionChanged" Handler="CountryComboboxChanged" />
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
@@ -56,6 +57,7 @@
                     <DataGridComboBoxColumn.EditingElementStyle>
                         <Style TargetType="{x:Type ComboBox}">
                             <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Employers, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                            <EventSetter Event="SelectionChanged" Handler="ManComboboxChanged" />
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>

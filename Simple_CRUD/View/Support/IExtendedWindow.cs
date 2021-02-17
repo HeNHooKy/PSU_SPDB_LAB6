@@ -8,5 +8,6 @@ namespace Simple_CRUD.View.Support
     public interface IExtendedWindow
     {
         void UpdateTable(string firstField, string secondField);
+        void UpdateTable();
     }
 }

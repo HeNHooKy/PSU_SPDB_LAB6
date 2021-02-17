@@ -55,13 +55,28 @@ namespace Simple_CRUD.View
             }
         }
 
+        private void CountryComboboxChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = (ComboBox)sender;
+            var country = (Country)comboBox.SelectedItem;
+            if (country.Id == -1)
+            {
+                var newPlayground = new Country
+                {
+                    Id = context.Countries.Count() == 0 ? 1 : context.Countries.Select(p => p.Id).Max() + 1,
+                };
+                var addWindow = new AddNewContextElement(this, context, newPlayground, (int)Tables.Numbers.Country);
+                addWindow.ShowDialog();
+            }
+        }
+
         private void RequestHandler()
         {
             var request = new GeneralRequestView(this, "Имя", "Фамилия");
             request.ShowDialog();
         }
 
-        private void UpdateTable()
+        public void UpdateTable()
         {
             UpdateTable(null, null);
         }
@@ -69,10 +84,10 @@ namespace Simple_CRUD.View
         public void UpdateTable(string firstField, string secondField)
         {
             //Стандартный запрос
-            firstField = firstField == null ? null : firstField.ToLower().Trim();
-            secondField = secondField == null ? null : secondField.ToLower().Trim();
+            firstField = firstField?.ToLower().Trim();
+            secondField = secondField?.ToLower().Trim();
 
-            var contextAllPrices = context.People.Where(p =>
+            var contextAllPeople = context.People.Where(p =>
                 (firstField == null || (firstField != null && p.Name.ToLower().Contains(firstField))) &&
                 (secondField == null || (secondField != null && p.Surname.ToLower().Contains(secondField)))
             );
@@ -83,10 +98,17 @@ namespace Simple_CRUD.View
             {
                 Countries.Add(country);
             }
-            foreach (var man in context.People)
+            foreach (var man in contextAllPeople)
             {
                 People.Add(man);
             }
+
+            Countries.Add(new Country
+            {
+                Id = -1,
+                Name = "Другая..."
+            });
+
             OnPropertyChanged(nameof(People));
         }
 
@@ -109,7 +131,7 @@ namespace Simple_CRUD.View
                 {
                     Id = People.Count == 0 ? 1 : People.Select(m => m.Id).Max() + 1,
                     Name = "John",
-                    Surname = "G." + (People.Select(m => m.Id).Max() + 1),
+                    Surname = "Doe " + (People.Select(m => m.Id).Max() + 1),
                     CountryBornId = Countries.Select(c => c.Id).Min()
                 };
                 man.CountryBorn = Countries.First(c => c.Id == man.CountryBornId);
@@ -146,7 +168,7 @@ namespace Simple_CRUD.View
             {
                 DataGrid dg = sender as DataGrid;
 
-                Man man = context.People.FirstOrDefault(e => e.Id == ((Engine)dg.SelectedItems[0]).Id);
+                Man man = context.People.FirstOrDefault(e => e.Id == ((Man)dg.SelectedItems[0]).Id);
                 if (man != null)
                 {
                     context.People.Update(man);

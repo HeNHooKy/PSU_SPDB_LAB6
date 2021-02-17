@@ -33,6 +33,7 @@ namespace Simple_CRUD.View
         public RelayCommand RequestCommand { get; private set; }
         public RelayCommand CancelCommand { get; private set; }
 
+
         private readonly Context context;
         private readonly AuthUser User;
 
@@ -46,7 +47,6 @@ namespace Simple_CRUD.View
             InsertCommand = new RelayCommand(InsertHandler);
             RequestCommand = new RelayCommand(RequestHandler);
             CancelCommand = new RelayCommand(CancelHandler);
-
             InitializeComponent();
             UpdateTable();
             DataContext = this;
@@ -58,13 +58,43 @@ namespace Simple_CRUD.View
             }
         }
 
+        private void GameComboboxChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = (ComboBox) sender;
+            var game = (Game)comboBox.SelectedItem;
+            if(game.Id == -1)
+            {
+                var newGame = new Game
+                {
+                    Id = context.Games.Count() == 0 ? 1 : context.Games.Select(p => p.Id).Max() + 1,
+                };
+                var addWindow = new AddNewContextElement(this, context, newGame, (int)Tables.Numbers.Game);
+                addWindow.ShowDialog();
+            }
+        }
+
+        private void PublisherComboboxChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = (ComboBox)sender;
+            var playground = (Playground)comboBox.SelectedItem;
+            if (playground.Id == -1)
+            {
+                var newPlayground= new Playground
+                {
+                    Id = context.Playgrounds.Count() == 0 ? 1 : context.Playgrounds.Select(p => p.Id).Max() + 1,
+                };
+                var addWindow = new AddNewContextElement(this, context, newPlayground, (int)Tables.Numbers.Playground);
+                addWindow.ShowDialog();
+            }
+        }
+
         private void RequestHandler()
         {
             var request = new GeneralRequestView(this, "Игра", "Игровая площадка");
             request.ShowDialog();
         }
 
-        private void UpdateTable()
+        public void UpdateTable()
         {
             UpdateTable(null, null);
         }
@@ -84,7 +114,6 @@ namespace Simple_CRUD.View
             AllPrices.Clear();
             Playgrounds.Clear();
             Games.Clear();
-            
 
             foreach (var price in contextAllPrices)
             {
@@ -99,6 +128,17 @@ namespace Simple_CRUD.View
                 Games.Add(game);
             }
             OnPropertyChanged(nameof(AllPrices));
+
+            Games.Add(new Game
+            {
+                Id = -1,
+                Name = "Другая..."
+            });
+            Playgrounds.Add(new Playground
+            {
+                Id = -1,
+                Name = "Другая..."
+            });
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -171,9 +211,12 @@ namespace Simple_CRUD.View
         private (int gameId, int playgroundId) GetGamePlaygroundMinSet()
         {
             (int gameId, int playgroundId) result = (int.MaxValue, int.MaxValue);
-            foreach(var game in Games)
+            var games = context.Games.ToList();
+            var playgrounds = context.Playgrounds.ToList();
+
+            foreach (var game in games)
             {
-                foreach(var playground in Playgrounds)
+                foreach(var playground in playgrounds)
                 {
                     if (AllPrices.FirstOrDefault(p => p.GameId == game.Id && p.PlaygroundId == playground.Id) == null)
                     {

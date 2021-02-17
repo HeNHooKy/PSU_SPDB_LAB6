@@ -60,7 +60,7 @@ namespace Simple_CRUD.View
                 GamesDataGrid.IsReadOnly = true;
             }
         }
-        private void UpdateTable()
+        public void UpdateTable()
         {
             UpdateTable(null, null);
         }
@@ -77,7 +77,7 @@ namespace Simple_CRUD.View
             firstField = firstField == null ? null : firstField.ToLower().Trim();
             secondField = secondField == null ? null : secondField.ToLower().Trim();
 
-            var contextAllPrices = context.Games.Where(g =>
+            var contextAllGames = context.Games.Where(g =>
                 (firstField == null || (firstField != null && g.Name.ToLower().Contains(firstField))) &&
                 (secondField == null || (secondField != null && g.Studio.Name.ToLower().Contains(secondField)))
             );
@@ -88,7 +88,7 @@ namespace Simple_CRUD.View
             Studios.Clear();
             Engines.Clear();
 
-            foreach (var game in contextAllPrices)
+            foreach (var game in contextAllGames)
             {
                 Games.Add(game);
             }
@@ -104,6 +104,23 @@ namespace Simple_CRUD.View
             {
                 Engines.Add(engine);
             }
+
+            Publishers.Add(new Publisher
+            {
+                Id = -1,
+                Name = "Другой..."
+            });
+            Studios.Add(new Studio
+            {
+                Id = -1,
+                Name = "Другая..."
+            });
+            Engines.Add(new Engine
+            {
+                Id = -1,
+                Name = "Другой..."
+            });
+
             OnPropertyChanged(nameof(Games));
         }
 
@@ -170,6 +187,51 @@ namespace Simple_CRUD.View
                     context.Games.Update(game);
                     context.SaveChanges();
                 }
+            }
+        }
+
+        private void StudioComboboxChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = (ComboBox)sender;
+            var studio = (Studio)comboBox.SelectedItem;
+            if (studio.Id == -1)
+            {
+                var newStudio = new Studio
+                {
+                    Id = context.Studios.Count() == 0 ? 1 : context.Studios.Select(p => p.Id).Max() + 1,
+                };
+                var addWindow = new AddNewContextElement(this, context, newStudio, (int)Tables.Numbers.Studio);
+                addWindow.ShowDialog();
+            }
+        }
+
+        private void PublisherComboboxChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = (ComboBox)sender;
+            var publisher = (Publisher)comboBox.SelectedItem;
+            if (publisher.Id == -1)
+            {
+                var newPublisher = new Publisher
+                {
+                    Id = context.Publishers.Count() == 0 ? 1 : context.Publishers.Select(p => p.Id).Max() + 1,
+                };
+                var addWindow = new AddNewContextElement(this, context, newPublisher, (int)Tables.Numbers.Publisher);
+                addWindow.ShowDialog();
+            }
+        }
+
+        private void EngineComboboxChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = (ComboBox)sender;
+            var engine = (Engine)comboBox.SelectedItem;
+            if (engine.Id == -1)
+            {
+                var newEngine = new Engine
+                {
+                    Id = context.Engines.Count() == 0 ? 1 : context.Engines.Select(p => p.Id).Max() + 1,
+                };
+                var addWindow = new AddNewContextElement(this, context, newEngine, (int)Tables.Numbers.Engine);
+                addWindow.ShowDialog();
             }
         }
     }

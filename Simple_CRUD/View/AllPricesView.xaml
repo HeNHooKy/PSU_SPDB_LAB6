@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <DataGrid Grid.Row="0" Grid.ColumnSpan="4" Name="AllPricesDataGrid"  
                 ItemsSource="{Binding AllPrices}" 
-                AutoGenerateColumns="False" CanUserAddRows="False" 
+                AutoGenerateColumns="False" CanUserAddRows="False"
                 RowEditEnding="AllPricessDataGrid_RowEditEnding"
                 SelectionMode="Single">
             <DataGrid.Columns>
@@ -36,7 +36,8 @@
                     </DataGridComboBoxColumn.ElementStyle>
                     <DataGridComboBoxColumn.EditingElementStyle>
                         <Style TargetType="{x:Type ComboBox}">
-                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Games, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                            <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Games, RelativeSource={RelativeSource AncestorType={x:Type Window}}}"  />
+                            <EventSetter Event="SelectionChanged" Handler="GameComboboxChanged" />
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>
@@ -44,7 +45,8 @@
                 Header="Игровая площадка"
                 SelectedValueBinding="{Binding PlaygroundId}"
                 DisplayMemberPath="Name" 
-                SelectedValuePath="Id">
+                SelectedValuePath="Id"
+                >
 
                     <DataGridComboBoxColumn.ElementStyle>
                         <Style TargetType="{x:Type ComboBox}">
@@ -54,6 +56,7 @@
                     <DataGridComboBoxColumn.EditingElementStyle>
                         <Style TargetType="{x:Type ComboBox}">
                             <Setter Property="ItemsSource" Value="{Binding Path=DataContext.Playgrounds, RelativeSource={RelativeSource AncestorType={x:Type Window}}}" />
+                            <EventSetter Event="SelectionChanged" Handler="PublisherComboboxChanged" />
                         </Style>
                     </DataGridComboBoxColumn.EditingElementStyle>
                 </DataGridComboBoxColumn>

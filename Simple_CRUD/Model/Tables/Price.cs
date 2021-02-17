@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
+using System.Windows;
 
 namespace Simple_CRUD.Model.Tables
 {
@@ -10,7 +11,7 @@ namespace Simple_CRUD.Model.Tables
         [Column("id")]
         public int Id { get; set; }
         [Column("price")]
-        public float Cost { get; set; }
+        public float? Cost { get; set; }
         [Column("game_id")]
         public int GameId { get; set; }
         [Column("playground_id")]

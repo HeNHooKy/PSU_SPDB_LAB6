@@ -23,7 +23,7 @@ namespace Simple_CRUD.View
         {
             InitializeComponent();
             DataContext = this;
-            User = new AuthUser() { Name = "Гость", Approved = false };
+            User = new AuthUser() { Name = "Гость", Approved = true };
             AuthNewUser();
             OpenPriceCommand = new RelayCommand(OpenPrice);
             OpenGameCommand = new RelayCommand(OpenGame);

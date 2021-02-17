@@ -57,13 +57,43 @@ namespace Simple_CRUD.View
             }
         }
 
+        private void CountryComboboxChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = (ComboBox)sender;
+            var country = (Country)comboBox.SelectedItem;
+            if (country.Id == -1)
+            {
+                var newCountry = new Country
+                {
+                    Id = context.Countries.Count() == 0 ? 1 : context.Countries.Select(p => p.Id).Max() + 1,
+                };
+                var addWindow = new AddNewContextElement(this, context, newCountry, (int)Tables.Numbers.Country);
+                addWindow.ShowDialog();
+            }
+        }
+
+        private void ManComboboxChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var comboBox = (ComboBox)sender;
+            var man = (Man)comboBox.SelectedItem;
+            if (man.Id == -1)
+            {
+                var newMan = new Man
+                {
+                    Id = context.People.Count() == 0 ? 1 : context.People.Select(p => p.Id).Max() + 1,
+                };
+                var addWindow = new AddNewContextElement(this, context, newMan, (int)Tables.Numbers.Man);
+                addWindow.ShowDialog();
+            }
+        }
+
         private void RequestHandler()
         {
             var request = new GeneralRequestView(this, "Название площадки", "Страна площадки");
             request.ShowDialog();
         }
 
-        private void UpdateTable()
+        public void UpdateTable()
         {
             UpdateTable(null, null);
         }
@@ -74,7 +104,7 @@ namespace Simple_CRUD.View
             firstField = firstField == null ? null : firstField.ToLower().Trim();
             secondField = secondField == null ? null : secondField.ToLower().Trim();
 
-            var contextAllPrices = context.Playgrounds.Where(p =>
+            var contextAllPlaygrounds = context.Playgrounds.Where(p =>
                 (firstField == null || (firstField != null && p.Name.ToLower().Contains(firstField))) &&
                 (secondField == null || (secondField != null && p.Country.Name.ToLower().Contains(secondField)))
             );
@@ -82,7 +112,7 @@ namespace Simple_CRUD.View
             Playgrounds.Clear();
             Countries.Clear();
             Employers.Clear();
-            foreach (var playground in context.Playgrounds)
+            foreach (var playground in contextAllPlaygrounds)
             {
                 Playgrounds.Add(playground);
             }
@@ -94,6 +124,21 @@ namespace Simple_CRUD.View
             {
                 Employers.Add(man);
             }
+
+            Employers.Add(new Man
+            {
+                Id = -1,
+                Name = "Другой..."
+            });
+
+            Countries.Add(new Country
+            {
+                Id = -1,
+                Name = "Другая..."
+            });
+
+
+
             OnPropertyChanged(nameof(Playgrounds));
         }
 

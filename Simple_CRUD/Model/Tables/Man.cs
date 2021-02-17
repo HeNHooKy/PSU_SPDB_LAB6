@@ -14,7 +14,7 @@ namespace Simple_CRUD.Model.Tables
         [Column("surname")]
         public string Surname { get; set; }
         [Column("country_born_id")]
-        public int CountryBornId { get; set; }
+        public int? CountryBornId { get; set; }
 
         public Country CountryBorn { get; set; }
     }
